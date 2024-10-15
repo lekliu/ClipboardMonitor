@@ -1,0 +1,2 @@
+# ClipboardMonitor
+实现andrion与win之前的剪切板共享
