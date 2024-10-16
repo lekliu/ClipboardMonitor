@@ -3,68 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clipboard Manager</title>
-    <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f4; }
-        .container { max-width: 800px; margin: auto; padding: 20px; background: white; border-radius: 5px; }
-        .item { margin: 10px 0; }
-        button { padding: 10px; color: white; background-color: #007BFF; border: none; border-radius: 5px; cursor: pointer; }
-        button:hover { background-color: #0056b3; }
-    </style>
+    <link rel="stylesheet" href="/static/style.css">
+    <title>Clipboard Data</title>
 </head>
 <body>
     <div class="container">
         <h1>Clipboard Data</h1>
-        <div id="clipdata-container">
-            {{ range $key, $value := . }}
-              {{ if hasPrefix $key "C" }}
-                <div class="item">
-                    <label>{{ $key }}: </label>
-                    <input type="text" value="{{ $value }}" data-key="{{ $key }}">
-                </div>
-              {{ end }}
-            {{ end }}
-        </div>
-        <button onclick="refreshData()">Refresh Data</button>
-        <button onclick="saveData()">Save Data</button>
+        <div id="clipdata-container"></div>
+        <button onclick="refreshData()">刷新数据</button>
+        <button onclick="saveData()">保存数据</button>
     </div>
 
     <script>
-        const baseUrl = 'http://{{ .Host }}/api/clipdata';
-
         async function fetchData() {
-            const response = await fetch(baseUrl);
+            const response = await fetch('/api/clipdata');
             const data = await response.json();
             const container = document.getElementById('clipdata-container');
             container.innerHTML = '';
-            data.forEach(item => {
-                container.innerHTML += `<div class="item">
-                    <label>${item.key}: </label>
-                    <input type="text" value="${item.value}" data-key="${item.key}">
-                </div>`;
-            });
+            for (const [seq, item] of Object.entries(data)) {
+                container.innerHTML += `
+                    <div>
+                        <label>${item['key']}</label>
+                        <textarea rows="3" cols="30" id="t_${item['key']}" style="width: 100%;" onclick="copyToClipboard('${item['key']}')"></textarea>
+                    </div>`;
+                document.getElementById("t_"+item['key']).innerHTML = item['value'];
+                //alert(document.getElementById("t_"+item['key']).value)
+            }
         }
 
         async function saveData() {
-            const items = document.querySelectorAll('#clipdata-container input');
-            const data = Array.from(items).map(item => ({
-                key: item.dataset.key,
-                value: item.value
-            }));
-            await fetch(baseUrl, {
+            const data = {};
+            for (let i = 0; i < 10; i++) {
+                const key = 'c' + i;
+                data[key] = document.getElementById("t_"+key).value;
+            }
+
+            await fetch('/api/clipdata', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
+                body: JSON.stringify(data),
             });
-            alert('Data saved!');
         }
 
         async function refreshData() {
             await fetchData();
         }
 
-        // Initial fetch
-        fetchData();
+        window.onload = fetchData;
+
+        // 将选中的textarea内容复制到剪贴板
+        function copyToClipboard(id) {
+            // const text = document.getElementById("t_"+id).value;
+            // if (navigator.clipboard) {
+            //     navigator.clipboard.writeText(text)
+            //         .then(() => {
+            //             console.log('Text copied to clipboard');
+            //         })
+            //         .catch(err => {
+            //             console.error('Failed to copy text: ', err);
+            //         });
+            // }
+            document.getElementById("t_"+id).select();
+            document.execCommand('copy');
+        }
     </script>
 </body>
 </html>
