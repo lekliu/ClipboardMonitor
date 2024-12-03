@@ -9,9 +9,8 @@
 <body>
     <div class="container">
         <h1>Clipboard Data</h1>
-        <div id="clipdata-container"></div>
         <button onclick="refreshData()">刷新数据</button>
-        <button onclick="saveData()">保存数据</button>
+        <div id="clipdata-container"></div>
     </div>
 
     <script>
@@ -24,7 +23,7 @@
                 container.innerHTML += `
                     <div>
                         <label>${item['key']}</label>
-                        <textarea rows="3" cols="30" id="t_${item['key']}" style="width: 100%;" onclick="copyToClipboard('${item['key']}')"></textarea>
+                        <textarea rows="3" cols="30" id="t_${item['key']}" style="width: 100%;" onclick="copyToClipboard('${item['key']}')" oninput="contentChanged('${item['key']}')"></textarea>
                     </div>`;
                 document.getElementById("t_"+item['key']).innerHTML = item['value'];
                 //alert(document.getElementById("t_"+item['key']).value)
@@ -64,7 +63,11 @@
             //         });
             // }
             document.getElementById("t_"+id).select();
-            document.execCommand('copy');
+            // document.execCommand('copy');
+        }
+
+        function contentChanged(id) {
+            saveData();
         }
     </script>
 </body>
