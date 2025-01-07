@@ -9,45 +9,54 @@
         android:id="@+id/titleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Clipboard Monitor"
-        android:textSize="24sp"     
-        android:textStyle="bold"
-        android:gravity="center"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:text="Clipboard Monitor"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/clipboardRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
 
     <LinearLayout
         android:id="@+id/buttonLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
         android:layout_marginTop="16dp">
 
         <Button
             android:id="@+id/refreshButton"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="4"
+            android:background="#03DAC5"
             android:text="刷新数据"
-            android:layout_marginEnd="8dp"
-            android:background="@color/colorPrimary"
-            android:textColor="@android:color/white"/>
+            android:textColor="#E0E0E0" />
 
         <Button
             android:id="@+id/uploadButton"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="上传剪贴板内容"
-            android:background="@color/colorAccent"
-            android:textColor="@android:color/white"/>
+            android:layout_marginEnd="4dp"
+            android:layout_weight="5"
+            android:background="#03DAC5"
+            android:text="上传剪贴内容"
+            android:textColor="#E0E0E0" />
+
+        <Button
+            android:id="@+id/configureButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:background="#03DAC5"
+            android:text="配置"
+            android:textColor="#E0E0E0" />
     </LinearLayout>
 
 </LinearLayout>

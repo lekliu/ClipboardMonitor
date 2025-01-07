@@ -1,0 +1,25 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/ipRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scrollbars="vertical" />
+
+    <EditText
+        android:id="@+id/newIpEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="输入新 IP 地址" />
+
+    <Button
+        android:id="@+id/addIpButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="添加 IP" />
+</LinearLayout>
