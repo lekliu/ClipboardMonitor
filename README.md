@@ -1,5 +1,7 @@
 # ClipboardMonitor
-实现andrion与win之前的剪切板共享
+实现andriod与windows之间的剪切板内容实时共享
+
+作者：微信号“liuenke88”
 
 ## web_go
 
